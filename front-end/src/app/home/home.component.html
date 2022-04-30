@@ -126,7 +126,6 @@
               <a class="dropdown-item text-center small text-gray-500" href="/home/(nav:events)">Show All Events</a>
             </div>
           </li>
-
           <div class="topbar-divider d-none d-sm-block"></div>
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
@@ -142,23 +141,19 @@
                 Profile
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" data-toggle="modal" (click)="openLogout(content)">
+              <a class="dropdown-item" data-toggle="modal" (click)="openLogout(content)">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 Logout
               </a>
             </div>
           </li>
-
         </ul>
-
       </nav>
       <!-- End of Topbar -->
-
       <!-- Begin Page Content -->
       <router-outlet name="nav"></router-outlet>
       <!-- End Page Content -->
     </div>
-
     <!-- Main Content -->
     <!-- End of Main Content -->
     <!-- End of Footer -->
@@ -176,13 +171,14 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-    <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="modalRef.close()">
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">×</span>
     </button>
   </div>
   <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
   <div class="modal-footer">
-    <button class="btn btn-secondary" (click)="modalRef.close()" type="button" data-dismiss="modal">Cancel</button>
+    <button class="btn btn-secondary" (click)="modal.close('Save click')" type="button"
+      data-dismiss="modal">Cancel</button>
     <a routerLink (click)="logout()" class="btn btn-primary">Logout</a>
   </div>
 </ng-template>

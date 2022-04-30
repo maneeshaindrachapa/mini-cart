@@ -67,7 +67,7 @@ export const routerComponents = [
   imports: [
     NgbModule,
     RouterModule.forRoot([
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      {path: '', redirectTo: 'sign-in', pathMatch: 'full'},
       {path: 'sign-in', canActivate: [LoginPageGuardService], component: UserSigninComponent},
       {path: 'sign-up', canActivate: [LoginPageGuardService], component: UserSignupComponent},
       {path: 'forgot-password', canActivate: [LoginPageGuardService], component: UserForgotPasswordComponent},
