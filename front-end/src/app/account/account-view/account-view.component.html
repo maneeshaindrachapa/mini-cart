@@ -1,0 +1,146 @@
+<form (ngSubmit)="onSubmit()" #data="ngForm">
+  <div>
+    <div class="col mr-2">
+    <label for="name">Account name:</label>
+    </div>
+    <div *ngIf="account" class="col mr-2" style="width: 25%">
+      <input type="text" [(ngModel)]="account.name"
+             class="form-control"
+             id="name"
+             name="name"
+             placeholder="Enter account name">
+    </div>
+  </div>
+  <div style="padding-top: 10px; padding-bottom: 10px" class="col mr-2">
+    <button type="submit"
+               class="btn btn-info">Submit</button>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Account type: {{type.name}}</div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="small font-weight-bold">Max users: {{type.maxUsers}}</div>
+                <div class="small font-weight-bold">Max warehouses: {{type.maxWarehouses}}</div>
+                <div class="small font-weight-bold">Max warehouse depth: {{type.maxWarehouseDepth}}</div>
+                <div class="small font-weight-bold">Max clients: {{type.maxClients}}</div>
+                <div class="small font-weight-bold">Max suppliers: {{type.maxSuppliers}}</div>
+              </div>
+            </div>
+
+            <div style="padding-top: 10px;">
+              <a href="/home/(nav:upgrade)" class="btn btn-info btn-icon-split">
+                <span class="text">Upgrade</span>
+              </a>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+     <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Admin</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                  <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr>
+                    <td>{{admin.firstName}}</td>
+                    <td>{{admin.lastName}}</td>
+                    <td>{{admin.email}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Page Heading -->
+
+
+          <h1 class="h3 mb-2 text-gray-800">Workers</h1>
+
+          <div style="padding-bottom: 10px">
+            <a href="/home/(nav:invite)" class="btn btn-info btn-icon-split">
+              <span class="text">Invite new user</span>
+            </a>
+          </div>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr *ngFor="let worker of page.content">
+                    <td>{{worker.firstName}}</td>
+                    <td>{{worker.lastName}}</td>
+                    <td>{{worker.email}}</td>
+                    <td><a (click)="(deleteWorker(worker.id))" class="btn btn-danger btn-circle" onclick="return confirm('Are you sure delete this user?')">
+                      <i class="fas fa-trash"></i>
+                    </a></td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <ngb-pagination
+                    [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="4"
+                    [rotate]="true" [boundaryLinks]="false"
+                    (pageChange)="getWorkers()">
+                    <ng-template ngbPaginationPrevious>Prev</ng-template>
+                    <ng-template ngbPaginationNext>Next</ng-template>
+                  </ngb-pagination>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+</form>
+
+

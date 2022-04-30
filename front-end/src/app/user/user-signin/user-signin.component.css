@@ -1,0 +1,36 @@
+.container {
+  width: 900px !important;
+  height: 540px !important;
+}
+
+.bg-login-image {
+  background: url("../../../assets/img/background_0.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.image-block {
+  height: 540px !important;
+  width: 470px !important;
+}
+
+.right-block {
+  margin: 50px 20px 0 20px;
+  width: 450px !important;
+}
+
+.text-center {
+  margin-top: 50px;
+}
+
+.field-icon {
+  margin-top: -47px !important;
+}
+
+.loader {
+  margin-left: 200px !important;
+}
+
+a {
+  color: #000;
+}
