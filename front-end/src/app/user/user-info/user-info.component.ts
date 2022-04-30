@@ -1,23 +1,25 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import AppError from "../../errors/app-error";
-import {HttpResponse} from "@angular/common/http";
-import {UserService} from "../services/user.service";
-import {LoginService} from "../services/login.service";
-import {User} from "../../models/user.model";
-import {changeDateFormat, changeTimeFormat} from "../../helpers/date-format-helper";
-import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ToastService} from "../../websocket/notification/toast.service";
-import {ResetPassword} from "../../models/resetPassword.model";
+import { HttpResponse } from "@angular/common/http";
+import { UserService } from "../services/user.service";
+import { LoginService } from "../services/login.service";
+import { User } from "../../models/user.model";
+import {
+  changeDateFormat,
+  changeTimeFormat,
+} from "../../helpers/date-format-helper";
+import { Subscription } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { ToastService } from "../../websocket/notification/toast.service";
+import { ResetPassword } from "../../models/resetPassword.model";
 
 @Component({
-  selector: 'app-user-info',
-  templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.css']
+  selector: "app-user-info",
+  templateUrl: "./user-info.component.html",
+  styleUrls: ["./user-info.component.css"],
 })
 export class UserInfoComponent implements OnInit, OnDestroy {
-
   getCurrentUserSubscription: Subscription;
   deleteUserSubscription: Subscription;
   updateUserSubscription: Subscription;
@@ -35,50 +37,58 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   firstName: String;
   lastName: String;
 
-  constructor(private userService: UserService,
-              private loginService: LoginService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private modalService: NgbModal,
-              private toastService: ToastService) {
-  }
+  constructor(
+    private userService: UserService,
+    private loginService: LoginService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: NgbModal,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
-    this.getCurrentUserSubscription = this.userService.getCurrentUser()
-      .subscribe((response: HttpResponse<any>) => {
+    this.getCurrentUserSubscription = this.userService
+      .getCurrentUser()
+      .subscribe(
+        (response: HttpResponse<any>) => {
           if (response) {
             this.initUser(response);
           }
-        }, (appError: AppError) => {
+        },
+        (appError: AppError) => {
           throw appError;
         }
       );
   }
 
   initUser(response: HttpResponse<any>) {
-    this.user = response.body;
-
+    this.user = response.user;
     this.firstName = new String(this.user.firstName);
     this.lastName = new String(this.user.lastName);
   }
 
   deleteUser() {
-    this.deleteUserSubscription = this.userService.delete(this.user.id).subscribe(
-      response => {
-        if (response) {
-          this.modalRef.close();
-          this.loginService.logout();
-          this.router.navigate(['/sign-up']);
+    this.deleteUserSubscription = this.userService
+      .delete(this.user.id)
+      .subscribe(
+        (response) => {
+          if (response) {
+            this.modalRef.close();
+            this.loginService.logout();
+            this.router.navigate(["/sign-up"]);
+          }
+        },
+        (appError: AppError) => {
+          if (appError.status === 404) {
+            this.toastService.show("User not found.", {
+              classname: "bg-danger text-light",
+              delay: 3000,
+            });
+          } else {
+            throw appError;
+          }
         }
-      },
-      (appError: AppError) => {
-        if (appError.status === 404) {
-          this.toastService.show('User not found.', {classname: 'bg-danger text-light', delay: 3000});
-        } else {
-          throw appError;
-        }
-      });
-
+      );
   }
 
   openDeleteModal(content) {
@@ -103,55 +113,64 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   }
 
   update(data: any): any {
-    const user = new User;
+    const user = new User();
     user.firstName = data.firstName;
     user.lastName = data.lastName;
-    this.updateUserSubscription = this.userService.update(user)
-      .subscribe((response: HttpResponse<any>) => {
+    this.updateUserSubscription = this.userService.update(user).subscribe(
+      (response: HttpResponse<any>) => {
         if (response) {
           this.user = response.body;
           this.userService.refreshUsername(this.user);
           this.editForm = false;
-          this.toastService.show('User was successfully updated.',
-            {classname: 'bg-success text-light', delay: 3000});
+          this.toastService.show("User was successfully updated.", {
+            classname: "bg-success text-light",
+            delay: 3000,
+          });
         }
-      }, (appError: AppError) => {
+      },
+      (appError: AppError) => {
         throw appError;
-      });
+      }
+    );
   }
 
   changePassword(data: any) {
     const resetPassword = new ResetPassword();
     resetPassword.currentPassword = data.currentPassword;
     resetPassword.newPassword = data.newPassword;
-    this.changePasswordSubscription = this.userService.updatePassword(resetPassword)
+    this.changePasswordSubscription = this.userService
+      .updatePassword(resetPassword)
       .subscribe(
-        response => {
+        (response) => {
           this.done = true;
-        }, (appError: AppError) => {
+        },
+        (appError: AppError) => {
           if (appError.status === 400) {
-            this.toastService.show('An incorrect password was provided.',
-              {classname: 'bg-danger text-light', delay: 3000});
+            this.toastService.show("An incorrect password was provided.", {
+              classname: "bg-danger text-light",
+              delay: 3000,
+            });
           } else {
             throw appError;
           }
-        });
+        }
+      );
   }
 
   ngOnDestroy(): void {
     this.userService.change.unsubscribe();
 
     if (this.getCurrentUserSubscription) {
-      this.getCurrentUserSubscription.unsubscribe()
+      this.getCurrentUserSubscription.unsubscribe();
     }
     if (this.deleteUserSubscription) {
-      this.deleteUserSubscription.unsubscribe()
+      this.deleteUserSubscription.unsubscribe();
     }
     if (this.updateUserSubscription) {
-      this.updateUserSubscription.unsubscribe()
+      this.updateUserSubscription.unsubscribe();
     }
     if (this.changePasswordSubscription) {
-      this.changePasswordSubscription.unsubscribe()
+      this.changePasswordSubscription.unsubscribe();
     }
   }
 }

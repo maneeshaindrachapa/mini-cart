@@ -1,10 +1,10 @@
 var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-  host: "localhost",
+  //host: "http://localhost:3306", //if use docker comment this host, else un-comment
   user: "root",
-  password: "",
-  database: "mini-cart",
+  password: "root",
+  database: "mini_cart",
 });
 
 connection.connect(function (err) {

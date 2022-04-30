@@ -6,9 +6,9 @@
     <!-- Sidebar - Brand -->
     <a routerLink="/" class="sidebar-brand d-flex align-items-center justify-content-center">
       <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-adversal"></i>
+        <i class="fas fa-fire" style="color:white"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">ims</div>
+      <div class="sidebar-brand-text mx-3" style="margin: 0px auto;color:white">Sahana IMS</div>
     </a>
 
     <!-- Divider -->
@@ -27,9 +27,10 @@
       <!-- Nav Item - Organization -->
       <li class="nav-item">
         <a [routerLink]="[{outlets: {nav: ['account']}}]" routerLinkActive="active" class="nav-link active">
-<!--          <i class="fas fa-fw fa-"></i>-->
+          <!--          <i class="fas fa-fw fa-"></i>-->
           <i class="far fa-address-card"></i>
-          <span>Account</span></a>
+          <span>Account</span>
+        </a>
       </li>
     </div>
 
@@ -42,10 +43,10 @@
         <i class="fas fa-fw fa-warehouse"></i>
         <span>Warehouses</span></a>
 
-    <hr class="sidebar-divider">
+      <hr class="sidebar-divider">
 
-    <div class="sidebar-heading">Item management</div>
-    <!-- Nav Item - Items -->
+      <div class="sidebar-heading">Item management</div>
+      <!-- Nav Item - Items -->
     <li class="nav-item">
       <a [routerLink]="[{ outlets: { nav: ['item-table'] } }]" routerLinkActive="active" class="nav-link active">
         <i class="fas fa-fw fa-table"></i>
@@ -97,27 +98,27 @@
           <!-- Nav Item - Alerts -->
           <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false" (click)="toastService.openCenter()">
+              aria-haspopup="true" aria-expanded="false" (click)="toastService.openCenter()">
               <i class="fas fa-bell fa-fw"></i>
               <!-- Counter - Alerts -->
               <span class="badge badge-danger badge-counter">{{toastService.unreadCount}}</span>
             </a>
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                 aria-labelledby="alertsDropdown">
+              aria-labelledby="alertsDropdown">
               <h6 class="dropdown-header">
                 Events Center
               </h6>
               <div class="eventsCenter">
                 <a class="dropdown-item d-flex align-items-center"
-                   *ngFor="let notification of toastService.notifications">
+                  *ngFor="let notification of toastService.notifications">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">
                       <i class="fas fa-file-alt text-white"></i>
                     </div>
                   </div>
                   <div>
-                    <div class="small text-gray-500">{{notification.date |  date:'hh:mm:ss, dd/MM'}}</div>
+                    <div class="small text-gray-500">{{notification.date | date:'hh:mm:ss, dd/MM'}}</div>
                     <span class="font-weight-bold">{{notification.message}}</span>
                   </div>
                 </a>
@@ -127,11 +128,10 @@
           </li>
 
           <div class="topbar-divider d-none d-sm-block"></div>
-
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
+              aria-haspopup="true" aria-expanded="false">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}}</span>
               <i class="fas fa-user icon-circle"></i>
             </a>

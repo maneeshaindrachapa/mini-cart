@@ -1,14 +1,13 @@
-const config = require("../../config");
+const config = require("../../config.json");
 const dbConfig = require("../../my-sql-connection");
 const jwt = require("jsonwebtoken");
 
 // login functionality
 exports.login = function (req, res, next) {
-  let email = req.body.email;
+  let email = req.body.username;
   let password = req.body.password;
-  let query_ = "SELECT * from user where email=?";
+  let query_ = "SELECT * from users where email=?";
   let confirmed = "";
-
   dbConfig.query(query_, [email], (err, rows) => {
     if (err) {
       console.log("Error Connecting to Server !");
@@ -18,23 +17,27 @@ exports.login = function (req, res, next) {
     } else {
       try {
         if (rows != null) {
+          console.log(rows);
           if (password == rows[0]["password"]) {
             const token = jwt.sign(
               {
-                user_id: rows[0]["userID"],
                 email: rows[0]["email"],
-                firstname: rows[0]["firstname"],
-                lastname: rows[0]["lastname"],
+                firstname: rows[0]["first_name"],
+                lastname: rows[0]["last_name"],
               },
-              config.env.JWT_KEY,
+              config.env.jwt_key,
               {
-                expiresIn: "2h",
+                expiresIn: config.env.jwt_expiry_seconds * 1000,
               }
             );
             return res.status(200).send({
               success: true,
               message: "Login Successful!",
               token: token,
+              username: email,
+              accountId: rows[0]["account_id"],
+              accontType: rows[0]["account_id"],
+              role: rows[0]["role"],
             });
           } else {
             console.log("Invalid Credentials!");
@@ -121,7 +124,8 @@ exports.forgetPassword = function (req, res, next) {
   // validate forgetpassword code
   let email = req.body.email;
   let query_0 = "SELECT * FROM USER WHERE email=?";
-  let query_1 = "UPDATE USER SET forget_password_code=?,validate_forget_password_code=false WHERE email=?";
+  let query_1 =
+    "UPDATE USER SET forget_password_code=?,validate_forget_password_code=false WHERE email=?";
   let forget_password_code = Math.floor(100000 + Math.random() * 900000);
   dbConfig.query(query_0, [email], (err, rows) => {
     if (err) {
@@ -136,7 +140,7 @@ exports.forgetPassword = function (req, res, next) {
           message: "Email Not Found !",
         });
       } else {
-        dbConfig.query(query_1, [forget_password_code,email], (err, rows) => {
+        dbConfig.query(query_1, [forget_password_code, email], (err, rows) => {
           if (err) {
             console.log(err);
             return res.status(401).send({
@@ -155,7 +159,47 @@ exports.forgetPassword = function (req, res, next) {
     }
   });
 };
-exports.validatePassword = function (req, res, next) {
-  
-}
 
+exports.validatePassword = function (req, res, next) {};
+
+exports.getProfileDetails = function (req, res, next) {
+  let account_id = req.body.account_id;
+  let query_ =
+    "SELECT first_name,last_name,email,created_date,updated_date,role from users where account_id=?";
+
+  dbConfig.query(query_, [account_id], (err, rows) => {
+    if (err) {
+      console.log("Error Connecting to Server !");
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server!" });
+    } else {
+      try {
+        if (rows != null) {
+          return res.status(200).send({
+            success: true,
+            message: "User Details fetched successfully",
+            user: {
+              firstName: rows[0]["first_name"],
+              lastName: rows[0]["last_name"],
+              email: rows[0]["email"],
+              createdDate: rows[0]["created_date"],
+              updatedDate: rows[0]["updated_date"],
+              role: rows[0]["role"],
+            },
+          });
+        } else {
+          console.log("Error fetching user details");
+          return res
+            .status(401)
+            .send({ success: false, message: "Error fetching user details" });
+        }
+      } catch (e) {
+        console.log(e);
+        return res
+          .status(401)
+          .send({ success: false, message: "Error fetching user details" });
+      }
+    }
+  });
+};

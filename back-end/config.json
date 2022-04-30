@@ -3,6 +3,7 @@
     "test": {
       "PORT": 8000
     },
-    "JWT_KEY": "Cl0udPiercer"
+    "jwt_key": "Cl0udPiercer",
+    "jwt_expiry_seconds":"300"
   }
 }

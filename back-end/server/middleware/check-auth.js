@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const config = require("../../config");
+const config = require("../../config.json");
 
 module.exports = function (req, res, next) {
   try {
     const decoded = jwt.verify(
       req.headers.authorization.split(" ")[1],
-      config.env.JWT_KEY
+      config.env.jwt_key
     );
     req.body.user_data = decoded;
     next();

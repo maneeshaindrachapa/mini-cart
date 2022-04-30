@@ -19,12 +19,12 @@
 
 .icon-pencil {
   margin-left: 535px;
-  color: blue;
+  color: black;
 }
 
 .icon-eye {
   margin-left: 535px;
-  color: blue;
+  color: black;
   float: right;
   margin-left: -25px;
   margin-top: -26px;
@@ -41,3 +41,6 @@
   margin-left: 420px;
 }
 
+a {
+  color: black !important;
+}
