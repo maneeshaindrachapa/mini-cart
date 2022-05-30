@@ -1,0 +1,19 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold" style="color:#5e1208;">Items</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2" *ngFor="let item of items" style="margin-bottom: 10px;">
+                <div class="card" style="width: 12rem;height:100%;">
+                    <img src="{{item.image_url}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 0.85rem;"><b>Item name: </b>{{item.name_item}}</h5>
+                        <p class="card-text" style="font-size: 0.85rem;"><b>Item description:</b> {{item.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

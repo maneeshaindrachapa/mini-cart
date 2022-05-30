@@ -29,6 +29,7 @@ import {SavedItemCreateComponent} from './item/saved-item-create/saved-item-crea
 import {ItemUpdateComponent} from "./item/item-update/item-update.component";
 import {SavedItemMoveComponent} from "./item/saved-item-move/saved-item-move.component";
 import {SavedItemOutComponent} from "./item/saved-item-out/saved-item-out.component";
+import { ItemListComponent } from './item/item-list/item-list.component';
 
 export const routerComponents = [
   // main components("/home", "/sign-in", "/sign-up")
@@ -80,6 +81,7 @@ export const routerComponents = [
         children: [
           {path: 'events', component: EventComponent, outlet: 'nav'},
           {path: 'item-table', component: ItemTableComponent, outlet: 'nav'},
+          {path: 'item-list', component: ItemListComponent, outlet: 'nav'},
           {path: 'account', component: AccountViewComponent, outlet: 'nav'},
           {path: 'upgrade', component: AccountUpgradeComponent, outlet: 'nav'},
           {path: 'invite', component: UserInviteComponent, outlet: 'nav'},

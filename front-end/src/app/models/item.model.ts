@@ -7,5 +7,5 @@ export class Item {
   volume: number;
   accountId: number;
   active: boolean;
-
+  image_url: string;
 }

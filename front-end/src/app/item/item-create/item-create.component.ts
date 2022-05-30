@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ItemService} from "../item.service";
-import {Item} from "../../models/item.model";
+import { ItemService } from "../item.service";
+import { Item } from "../../models/item.model";
 
 
 @Component({
@@ -14,12 +14,12 @@ export class ItemCreateComponent implements OnInit {
 
   constructor(private itemService: ItemService) { }
 
-  ngOnInit()  {
+  ngOnInit() {
   }
-createItem() {
-  this.itemService.addItem(this.item).subscribe(data => {
-  this.itemResult = data;
-  this.itemService.goToUpdateItem(this.itemResult.id);
-   });
-}
+  createItem() {
+    this.itemService.addItem(this.item).subscribe(data => {
+      this.itemResult = data;
+      this.itemService.goToUpdateItem(this.itemResult.id);
+    });
+  }
 }

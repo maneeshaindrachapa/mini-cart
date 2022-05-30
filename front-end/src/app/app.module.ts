@@ -14,6 +14,7 @@ import {ToastsContainerComponent} from "./websocket/notification/toasts-containe
 import {TruncatePipe} from './pipe/truncate.pipe';
 import {NgbdSortableHeader} from "./associate/ngbd-sortable-header.directive";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ItemListComponent } from './item/item-list/item-list.component';
 
 export function getToken() {
   let jwtToken = '';
@@ -29,7 +30,8 @@ export function getToken() {
     ToastsContainerComponent,
     routerComponents,
     TruncatePipe,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    ItemListComponent
   ],
   imports: [
     BrowserModule,

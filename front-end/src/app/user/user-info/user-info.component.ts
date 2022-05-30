@@ -62,7 +62,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   }
 
   initUser(response: HttpResponse<any>) {
-    this.user = response.user;
+    this.user = response.body;
     this.firstName = new String(this.user.firstName);
     this.lastName = new String(this.user.lastName);
   }
