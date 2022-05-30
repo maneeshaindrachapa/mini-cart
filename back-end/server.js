@@ -7,6 +7,8 @@ const port = config.env.test.PORT || 8080;
 
 // import routes
 const users = require('./server/routes/user-routes');
+const items = require('./server/routes/item-routes');
+
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -19,6 +21,7 @@ app.use(function(req, res, next) {
 
 // Routes
 app.use('/user', users);
+app.use('/item', items);
 
 app.listen(port, () => {
     console.log('Server started on port ' + port );

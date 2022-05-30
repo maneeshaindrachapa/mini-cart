@@ -17,7 +17,6 @@ exports.login = function (req, res, next) {
     } else {
       try {
         if (rows != null) {
-          console.log(rows);
           if (password == rows[0]["password"]) {
             const token = jwt.sign(
               {
@@ -160,7 +159,7 @@ exports.forgetPassword = function (req, res, next) {
   });
 };
 
-exports.validatePassword = function (req, res, next) {};
+exports.updatePassword = function (req, res, next) { };
 
 exports.getProfileDetails = function (req, res, next) {
   let account_id = req.body.account_id;
@@ -177,16 +176,14 @@ exports.getProfileDetails = function (req, res, next) {
       try {
         if (rows != null) {
           return res.status(200).send({
-            success: true,
-            message: "User Details fetched successfully",
-            user: {
+            success: true, body: {
               firstName: rows[0]["first_name"],
               lastName: rows[0]["last_name"],
               email: rows[0]["email"],
               createdDate: rows[0]["created_date"],
               updatedDate: rows[0]["updated_date"],
               role: rows[0]["role"],
-            },
+            }
           });
         } else {
           console.log("Error fetching user details");
