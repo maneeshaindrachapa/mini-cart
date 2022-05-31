@@ -20,6 +20,7 @@ import { UpdateUsersComponent } from './users/update-users/update-users.componen
 import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 import { DatePipe } from '@angular/common';
 import { ChartsModule } from 'ng2-charts';
+import { CartComponent } from './cart/cart.component';
 
 export function getToken() {
   let jwtToken = '';
@@ -39,7 +40,8 @@ export function getToken() {
     ItemListComponent,
     ViewUsersComponent,
     UpdateUsersComponent,
-    DashboardViewComponent
+    DashboardViewComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

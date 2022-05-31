@@ -138,8 +138,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     const resetPassword = new ResetPassword();
     resetPassword.currentPassword = data.currentPassword;
     resetPassword.newPassword = data.newPassword;
-    this.changePasswordSubscription = this.userService
-      .updatePassword(resetPassword)
+    this.changePasswordSubscription = this.userService.updatePassword(sessionStorage.getItem('username'), resetPassword)
       .subscribe(
         (response) => {
           this.done = true;

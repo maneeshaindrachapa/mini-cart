@@ -7,12 +7,20 @@
         <div class="row">
             <div class="col-md-2" *ngFor="let item of items" style="margin-bottom: 10px;">
                 <div class="card" style="width: 12rem;height:100%;">
-                    <img src="{{item.image_url}}" class="card-img-top" alt="...">
+                    <img src="{{item.image_url}}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 0.85rem;"><b>{{item.name_item.toUpperCase()}} |
                                 ${{item.price}}</b></h5>
                         <p class="card-text scroll" style="font-size: 0.85rem;">{{item.description}}
                         </p>
+                        <button class="btn btn-black" style="display:block;margin: 0px auto;"
+                            *ngIf="role!='ADMIN' && !iCart.includes(item.id) " (click)='addToCart(item)'><i
+                                class='fa fa-shopping-cart' style="font-size: 0.85rem;color:white"></i> Add to
+                            Cart</button>
+                        <button class="btn btn-grey" style="display:block;margin: 0px auto;"
+                            *ngIf="role!='ADMIN' && iCart.includes(item.id) " (click)='addToCart(item)'><i
+                                class='fa fa-shopping-cart' style="font-size: 0.85rem;color:black"></i> Add to
+                            Cart</button>
                     </div>
                 </div>
             </div>
