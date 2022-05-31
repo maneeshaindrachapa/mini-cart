@@ -200,3 +200,84 @@ exports.getProfileDetails = function (req, res, next) {
     }
   });
 };
+
+exports.getAllUsers = function (req, res, next) {
+  let page = req.query.page;
+  page = Number(page);
+  let size = req.query.size;
+  size = Number(size);
+  let sort = req.query.sort;
+  let direction = req.query.direction;
+
+  var lowerLimit = (page) * size;
+  var upperLimit = (page + 1) * size;
+
+  let query_0 = "SELECT * FROM USERS ORDER BY id " + direction + " limit " + lowerLimit + "," + upperLimit + ";";
+  dbConfig.query(query_0, [], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows != null) {
+        return res.status(200).send({ rows });
+      }
+    }
+  });
+};
+
+exports.getUserById = function (req, res, next) {
+  let id = req.params.id;
+  let query_0 = "SELECT * FROM USERS WHERE id=?";
+
+  dbConfig.query(query_0, [id], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows != null) {
+        return res.status(200).send({
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          role: rows[0].role,
+          createdDate: rows[0].created_date,
+          updatedDate: rows[0].updated_date
+        });
+      }
+    }
+  });
+};
+
+exports.updateUser = function (req, res, next) {
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let role = req.body.role;
+  let id = req.body.id;
+  id = id.toString();
+  let query_0 = "UPDATE USERS SET first_name=?,last_name=?,role=? WHERE id=?";
+  dbConfig.query(query_0, [firstname, lastname, role, id], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows > 0) {
+        return res.status(200).send({
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          role: rows[0].role,
+          createdDate: rows[0].created_date,
+          updatedDate: rows[0].updated_date
+        });
+      }
+    }
+  });
+};

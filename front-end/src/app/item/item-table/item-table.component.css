@@ -1,3 +1,19 @@
-input.ng-touched.ng-invalid {border:solid red 2px;}
-input.ng-touched.ng-valid {border:solid green 2px;}
+input.ng-touched.ng-invalid {
+    border: solid red 2px;
+}
 
+input.ng-touched.ng-valid {
+    border: solid green 2px;
+}
+
+.scroll {
+    max-height: 20px !important;
+    max-width: 20px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}

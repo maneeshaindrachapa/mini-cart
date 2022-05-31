@@ -2,6 +2,7 @@ export class Item {
 
   id: number;
   name: string;
+  price:number;
   unit: string;
   description: string;
   volume: number;

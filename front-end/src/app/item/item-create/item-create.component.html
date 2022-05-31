@@ -9,6 +9,8 @@
           <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" [(ngModel)]="item.name" name="name" class="form-control" id="name">
+            <label for="price">Price:</label>
+            <input type="text" [(ngModel)]="item.price" name="price" class="form-control" id="price">
             <label for="unit">Unit:</label>
             <input type="text" [(ngModel)]="item.unit" name="unit" class="form-control" id="unit">
             <label for="description">Description:</label>
@@ -16,7 +18,7 @@
             <label for="volume">Volume:</label>
             <input type="text" [(ngModel)]="item.volume" name="volume" class="form-control" id="volume">
             <label for="url">Image URL:</label>
-            <input type="text" [(ngModel)]="item.url" name="url" class="form-control" id="url">
+            <input type="text" [(ngModel)]="item.image_url" name="url" class="form-control" id="url">
           </div>
           <button (click)="createItem()" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
