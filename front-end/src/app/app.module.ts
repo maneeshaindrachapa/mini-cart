@@ -1,19 +1,25 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {AppComponent} from './app.component';
-import {AppRoutingModule, routerComponents} from './app.routing.module';
-import {HttpClientModule} from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import {JwtModule} from '@auth0/angular-jwt';
-import {GlobalErrorHandler} from './errors/global-error-handler';
-import {environment} from '../environments/environment';
-import {ToastsContainerComponent} from "./websocket/notification/toasts-container.component";
-import {TruncatePipe} from './pipe/truncate.pipe';
-import {NgbdSortableHeader} from "./associate/ngbd-sortable-header.directive";
+import { AppComponent } from './app.component';
+import { AppRoutingModule, routerComponents } from './app.routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { JwtModule } from '@auth0/angular-jwt';
+import { GlobalErrorHandler } from './errors/global-error-handler';
+import { environment } from '../environments/environment';
+import { ToastsContainerComponent } from "./websocket/notification/toasts-container.component";
+import { TruncatePipe } from './pipe/truncate.pipe';
+import { NgbdSortableHeader } from "./associate/ngbd-sortable-header.directive";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ItemListComponent } from './item/item-list/item-list.component';
+import { ViewUsersComponent } from './users/view-users/view-users.component';
+import { UpdateUsersComponent } from './users/update-users/update-users.component';
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { DatePipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 
 export function getToken() {
   let jwtToken = '';
@@ -29,7 +35,11 @@ export function getToken() {
     ToastsContainerComponent,
     routerComponents,
     TruncatePipe,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    ItemListComponent,
+    ViewUsersComponent,
+    UpdateUsersComponent,
+    DashboardViewComponent
   ],
   imports: [
     BrowserModule,
@@ -47,11 +57,13 @@ export function getToken() {
         skipWhenExpired: true
       }
     }),
-    FontAwesomeModule
+    FontAwesomeModule,
+    ChartsModule
   ],
   providers: [
-    {provide: 'BASE_API_URL', useValue: environment.apiUrl},
-    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    { provide: 'BASE_API_URL', useValue: environment.apiUrl },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

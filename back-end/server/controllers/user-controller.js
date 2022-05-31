@@ -17,7 +17,6 @@ exports.login = function (req, res, next) {
     } else {
       try {
         if (rows != null) {
-          console.log(rows);
           if (password == rows[0]["password"]) {
             const token = jwt.sign(
               {
@@ -160,7 +159,7 @@ exports.forgetPassword = function (req, res, next) {
   });
 };
 
-exports.validatePassword = function (req, res, next) {};
+exports.updatePassword = function (req, res, next) { };
 
 exports.getProfileDetails = function (req, res, next) {
   let account_id = req.body.account_id;
@@ -177,16 +176,14 @@ exports.getProfileDetails = function (req, res, next) {
       try {
         if (rows != null) {
           return res.status(200).send({
-            success: true,
-            message: "User Details fetched successfully",
-            user: {
+            success: true, body: {
               firstName: rows[0]["first_name"],
               lastName: rows[0]["last_name"],
               email: rows[0]["email"],
               createdDate: rows[0]["created_date"],
               updatedDate: rows[0]["updated_date"],
               role: rows[0]["role"],
-            },
+            }
           });
         } else {
           console.log("Error fetching user details");
@@ -199,6 +196,87 @@ exports.getProfileDetails = function (req, res, next) {
         return res
           .status(401)
           .send({ success: false, message: "Error fetching user details" });
+      }
+    }
+  });
+};
+
+exports.getAllUsers = function (req, res, next) {
+  let page = req.query.page;
+  page = Number(page);
+  let size = req.query.size;
+  size = Number(size);
+  let sort = req.query.sort;
+  let direction = req.query.direction;
+
+  var lowerLimit = (page) * size;
+  var upperLimit = (page + 1) * size;
+
+  let query_0 = "SELECT * FROM USERS ORDER BY id " + direction + " limit " + lowerLimit + "," + upperLimit + ";";
+  dbConfig.query(query_0, [], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows != null) {
+        return res.status(200).send({ rows });
+      }
+    }
+  });
+};
+
+exports.getUserById = function (req, res, next) {
+  let id = req.params.id;
+  let query_0 = "SELECT * FROM USERS WHERE id=?";
+
+  dbConfig.query(query_0, [id], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows != null) {
+        return res.status(200).send({
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          role: rows[0].role,
+          createdDate: rows[0].created_date,
+          updatedDate: rows[0].updated_date
+        });
+      }
+    }
+  });
+};
+
+exports.updateUser = function (req, res, next) {
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let role = req.body.role;
+  let id = req.body.id;
+  id = id.toString();
+  let query_0 = "UPDATE USERS SET first_name=?,last_name=?,role=? WHERE id=?";
+  dbConfig.query(query_0, [firstname, lastname, role, id], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows > 0) {
+        return res.status(200).send({
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          role: rows[0].role,
+          createdDate: rows[0].created_date,
+          updatedDate: rows[0].updated_date
+        });
       }
     }
   });

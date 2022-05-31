@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ResetPasswordService} from "../services/reset-password.service";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { ResetPasswordService } from "../services/reset-password.service";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import AppError from "../../errors/app-error";
 
 @Component({
@@ -17,7 +17,7 @@ export class UserForgotPasswordComponent implements OnInit {
   load = false;
 
   constructor(private resetPasswordService: ResetPasswordService,
-              public router: Router) {
+    public router: Router) {
   }
 
   ngOnInit() {

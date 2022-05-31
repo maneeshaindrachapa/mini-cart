@@ -3,7 +3,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   //host: "http://localhost:3306", //if use docker comment this host, else un-comment
   user: "root",
-  password: "root",
+  password: "",
   database: "mini_cart",
 });
 
