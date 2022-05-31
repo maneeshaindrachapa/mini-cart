@@ -28,7 +28,7 @@ export class UserService {
   constructor(
     @Inject("BASE_API_URL") private baseUrl: string,
     private http: HttpClient
-  ) {}
+  ) { }
 
   update(user: User): Observable<any> {
     return this.http
@@ -40,9 +40,9 @@ export class UserService {
       );
   }
 
-  updatePassword(data: ResetPassword): Observable<any> {
+  updatePassword(username, data: ResetPassword): Observable<any> {
     return this.http
-      .put<User>(this.baseUrl + "/users/update-password", data, {
+      .put<User>(this.baseUrl + "/user/update-password", { username: username, password: data.newPassword, oldpasswrod: data.currentPassword }, {
         observe: "response",
       })
       .pipe(

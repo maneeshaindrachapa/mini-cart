@@ -8,6 +8,9 @@ exports.addItem = function (req, res, next) {
     let units = req.body.unit;
     let volume = req.body.volume;
     let url = req.body.image_url;
+    if( typeof url !== 'undefined' || url==null){
+        url ="https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg";
+    }
 
     let query_0 = "SELECT * FROM ITEMS WHERE name_item=?";
     let query_1 =

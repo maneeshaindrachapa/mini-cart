@@ -69,7 +69,7 @@ exports.register = function (req, res, next) {
 
   let query_0 = "SELECT * FROM USER WHERE email=?";
   let query_1 =
-    "INSERT INTO USER (email, password, first_name, last_name, address) VALUES(?,?,?,?,?)";
+    "INSERT INTO USER (email, password, first_name, last_name, address,role) VALUES(?,?,?,?,?,'CUSTA')";
 
   dbConfig.query(query_0, [email], (err, rows) => {
     if (err) {
@@ -159,7 +159,38 @@ exports.forgetPassword = function (req, res, next) {
   });
 };
 
-exports.updatePassword = function (req, res, next) { };
+exports.updatePassword = function (req, res, next) {
+  let username = req.body.username;
+  let oldpasswrod = req.body.oldpasswrod;
+  let password = req.body.password;
+
+  let query_0 = "UPDATE USERS SET password=? WHERE email=? AND password=?";
+
+  dbConfig.query(query_0, [password, username, oldpasswrod], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      if (rows != null) {
+        return res.status(200).send({
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          role: rows[0].role,
+          createdDate: rows[0].created_date,
+          updatedDate: rows[0].updated_date
+        });
+      }else{
+        return res
+        .status(401)
+        .send({ success: false, message: "Invalid Creadentials !" });
+      }
+    }
+  });
+};
 
 exports.getProfileDetails = function (req, res, next) {
   let account_id = req.body.account_id;

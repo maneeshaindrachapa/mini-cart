@@ -33,6 +33,7 @@ import { ItemListComponent } from './item/item-list/item-list.component';
 import { ViewUsersComponent } from './users/view-users/view-users.component';
 import { UpdateUsersComponent } from './users/update-users/update-users.component';
 import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { CartComponent } from './cart/cart.component';
 
 export const routerComponents = [
   // main components("/home", "/sign-in", "/sign-up")
@@ -105,6 +106,7 @@ export const routerComponents = [
           { path: 'create-item', component: ItemCreateComponent, outlet: 'nav' },
           { path: 'users', component: ViewUsersComponent, outlet: 'nav' },
           { path: 'update-user/:id', component: UpdateUsersComponent, outlet: 'nav' },
+          { path: 'cart', component: CartComponent, outlet: 'nav' },
         ]
       },
     ])
