@@ -32,6 +32,7 @@ import { SavedItemOutComponent } from "./item/saved-item-out/saved-item-out.comp
 import { ItemListComponent } from './item/item-list/item-list.component';
 import { ViewUsersComponent } from './users/view-users/view-users.component';
 import { UpdateUsersComponent } from './users/update-users/update-users.component';
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 
 export const routerComponents = [
   // main components("/home", "/sign-in", "/sign-up")
@@ -92,7 +93,7 @@ export const routerComponents = [
           { path: 'warehouse-create', component: WarehouseCreateComponent, outlet: 'nav' },
           { path: 'warehouses', component: WarehousesComponent, outlet: 'nav' },
           { path: 'warehouse-update/:id', component: WarehouseUpdateComponent, outlet: 'nav' },
-          { path: 'dashboard', component: DashboardComponent, outlet: 'nav' },
+          { path: 'dashboard', component: DashboardViewComponent, outlet: 'nav' },
           { path: 'associates', component: AssociateComponent, outlet: 'nav' },
           { path: 'add-associate', component: FormAssociateComponent, outlet: 'nav' },
           { path: 'edit-associate/:id', component: FormAssociateComponent, outlet: 'nav' },

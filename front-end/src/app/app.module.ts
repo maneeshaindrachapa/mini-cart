@@ -17,6 +17,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ItemListComponent } from './item/item-list/item-list.component';
 import { ViewUsersComponent } from './users/view-users/view-users.component';
 import { UpdateUsersComponent } from './users/update-users/update-users.component';
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { DatePipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 
 export function getToken() {
   let jwtToken = '';
@@ -35,7 +38,8 @@ export function getToken() {
     NgbdSortableHeader,
     ItemListComponent,
     ViewUsersComponent,
-    UpdateUsersComponent
+    UpdateUsersComponent,
+    DashboardViewComponent
   ],
   imports: [
     BrowserModule,
@@ -53,11 +57,13 @@ export function getToken() {
         skipWhenExpired: true
       }
     }),
-    FontAwesomeModule
+    FontAwesomeModule,
+    ChartsModule
   ],
   providers: [
     { provide: 'BASE_API_URL', useValue: environment.apiUrl },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
-import {LoginService} from "../services/login.service";
-import {LoginUser} from "../../models/loginUser.model";
-import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import { Component, OnDestroy } from '@angular/core';
+import { LoginService } from "../services/login.service";
+import { LoginUser } from "../../models/loginUser.model";
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 import AppError from "../../errors/app-error";
 
 @Component({
@@ -19,7 +19,7 @@ export class UserSigninComponent implements OnDestroy {
   load = false;
 
   constructor(private loginService: LoginService,
-              private router: Router) {
+    private router: Router) {
   }
 
   credentialSetter(response: any) {
@@ -41,7 +41,11 @@ export class UserSigninComponent implements OnDestroy {
       .subscribe(response => {
         if (response) {
           this.credentialSetter(response);
-          this.router.navigate(['home', {outlets: {nav: ['dashboard']}}]);
+          if (response.role == 'ADMIN') {
+            this.router.navigate(['home', { outlets: { nav: ['dashboard'] } }]);
+          } else {
+            this.router.navigate(['home', { outlets: { nav: ['item-list'] } }]);
+          }
         }
       }, (appError: AppError) => {
         if (appError.status === 401) {

@@ -1,0 +1,65 @@
+<div class="card shadow mb-4">
+    <div class="row mb-4 ml-4 mt-2">
+        <div class="col-md-3">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Revenue</h5>
+                    <p class="card-text"><b> ${{totalRevenue}}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Revenue</h5>
+                    <p class="card-text">{{monthNames[month]}}<b> ${{revenue}}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text"><b>{{totalUser}}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Monthly Users</h5>
+                    <p class="card-text">{{monthNames[month]}}<b> {{monthlyUsers}}</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ml-4 mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <canvas baseChart [data]="revenueChartData" [labels]="revenueChartLabels"
+                        [chartType]="revenueChartType" [legend]=true>
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <canvas baseChart [datasets]="rbarChartData" [labels]="rbarChartLabels" [options]="barChartOptions"
+                        [legend]="rbarChartLegend" [chartType]="rbarChartType">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <canvas baseChart [datasets]="tbarChartData" [labels]="rbarChartLabels" [options]="barChartOptions"
+                        [legend]="rbarChartLegend" [chartType]="rbarChartType">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

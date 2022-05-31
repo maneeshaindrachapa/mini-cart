@@ -5,7 +5,6 @@ import { Item } from '../../models/item.model';
 import { SavedItem } from '../../models/savedItem.model';
 import { WarehouseService } from '../../warehouse/service/warehouse.service';
 import { Warehouse } from '../../models/warehouse.model';
-import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-item-update',
