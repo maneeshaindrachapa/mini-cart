@@ -6,17 +6,17 @@ exports.addItem = function (req, res, next) {
     let price = req.body.price;
     let description = req.body.description;
     let units = req.body.unit;
-    let volume = req.body.volume;
     let url = req.body.image_url;
     if (typeof url !== 'undefined' || url == null) {
         url = "https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg";
     }
 
     let query_1 =
-        "INSERT INTO ITEMS (name_item, price,description, unit, volume,image_url) VALUES(?,?,?,?,?,?)";
+        "INSERT INTO ITEMS (name_item, price,description, unit,image_url) VALUES(?,?,?,?,?)";
+    let query_0 = "SELECT id FROM ITEMS ORDER BY id DESC LIMIT 1";
     dbConfig.query(
         query_1,
-        [itemName, price, description, units, volume, url],
+        [itemName, price, description, units, url],
         (err, rows) => {
             if (err) {
                 console.log(err);
@@ -25,10 +25,14 @@ exports.addItem = function (req, res, next) {
                     message: "Error Connecting to Server !",
                 });
             } else {
-                return res.status(201).send({
-                    success: true,
-                    message: "Item added successfully",
-                });
+                dbConfig.query(query_0,[],(err,rows)=>{
+                    return res.status(201).send({
+                        success: true,
+                        id:rows[0].id,
+                        message: "Item added successfully",
+                    });
+                })
+                
             }
         }
     );
@@ -108,12 +112,11 @@ exports.updateItem = function (req, res, next) {
     let price = req.body.price;
     let description = req.body.description;
     let units = req.body.unit;
-    let volume = req.body.volume;
     let url = req.body.image_url;
     let id = req.body.id;
     id = id.toString();
-    let query_0 = "UPDATE ITEMS SET name_item=?,price=?,description=?,unit=?,volume=?,image_url=? WHERE id=?";
-    dbConfig.query(query_0, [itemName, price, description, units, volume, url, id], (err, rows) => {
+    let query_0 = "UPDATE ITEMS SET name_item=?,price=?,description=?,unit=?,image_url=? WHERE id=?";
+    dbConfig.query(query_0, [itemName, price, description, units, url, id], (err, rows) => {
         if (err) {
             console.log(err);
             return res
@@ -127,7 +130,6 @@ exports.updateItem = function (req, res, next) {
                     price: rows[0].price,
                     unit: rows[0].unit,
                     description: rows[0].description,
-                    volume: rows[0].volume,
                     accountId: rows[0].account_id,
                     active: rows[0].active,
                     image_url: rows[0].image_url,
