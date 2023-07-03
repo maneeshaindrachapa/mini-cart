@@ -92,6 +92,22 @@ exports.getAllItems = function (req, res, next) {
     });
 };
 
+exports.getAllItems_ = function (req, res, next) {
+    let query_0 = "SELECT * FROM ITEMS";
+    dbConfig.query(query_0, [], (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res
+                .status(401)
+                .send({ success: false, message: "Error Connecting to Server !" });
+        } else {
+            if (rows != null) {
+                return res.status(200).send({ rows });
+            }
+        }
+    });
+};
+
 exports.deleteItem = function (req, res, next) {
     let id = req.params.id;
     let query_0 = "DELETE FROM ITEMS WHERE id=?";

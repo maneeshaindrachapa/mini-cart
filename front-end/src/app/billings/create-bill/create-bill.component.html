@@ -1,0 +1,25 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold">Generate Bill</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive" style="font-size: 0.85rem;">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm"
+                    (ngModelChange)="onSearch()">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Clear</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                {{filteredItems.length}}
+                <ul class="dropdown-menu" *ngIf="filteredItems.length > 0">
+                    <li *ngFor="let result of filteredItems">
+                        <a class="dropdown-item" href="#">{{item.name_item}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

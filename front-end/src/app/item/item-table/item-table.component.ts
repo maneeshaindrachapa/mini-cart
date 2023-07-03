@@ -52,8 +52,6 @@ export class ItemTableComponent implements OnInit {
     });
   }
 
-  
-  // Method triggered when the search term changes
   onSearch() {
     // Perform the filtering in real-time
     this.filteredItems = this.searchTerm

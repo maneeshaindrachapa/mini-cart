@@ -75,9 +75,13 @@ exports.register = function (req, res, next) {
   let firstname = req.body.firstName;
   let lastname = req.body.lastName;
   let address = req.body.address;
+  let role = req.body.role;
+  if (role == null || role == "") {
+    role = "CASH";
+  }
   let query_0 = "SELECT * FROM USERS WHERE email=?";
   let query_1 =
-    "INSERT INTO USERS (email, password, first_name, last_name, role) VALUES(?,?,?,?,'WORKER')";
+    `INSERT INTO USERS (email, password, first_name, last_name, role) VALUES(?,?,?,?,'${role}')`;
 
   dbConfig.query(query_0, [email, password, firstname, lastname], (err, rows) => {
     if (err) {
@@ -368,3 +372,22 @@ exports.updateUser = function (req, res, next) {
     }
   });
 };
+
+exports.deleteUser = function (req, res, next) {
+  let id = req.params.id;
+  let query_0 = "DELETE FROM USERS  WHERE id = ?";
+
+  dbConfig.query(query_0, [id], (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .send({ success: false, message: "Error Connecting to Server !" });
+    } else {
+      return res.status(200).send({
+        success: true,
+        message: "User Deleted Successfully."
+      });
+    }
+  });
+}
