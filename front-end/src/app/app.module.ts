@@ -23,6 +23,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CartComponent } from './cart/cart.component';
 import { AddUsersComponent } from './users/add-users/add-users.component';
 import { CreateBillComponent } from './billings/create-bill/create-bill.component';
+import { NgxCaptureModule } from 'ngx-capture';
 
 export function getToken() {
   let jwtToken = '';
@@ -64,7 +65,8 @@ export function getToken() {
       }
     }),
     FontAwesomeModule,
-    ChartsModule
+    ChartsModule,
+    NgxCaptureModule
   ],
   providers: [
     { provide: 'BASE_API_URL', useValue: environment.apiUrl },

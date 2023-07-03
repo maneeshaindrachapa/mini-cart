@@ -10,7 +10,7 @@ import { RegistrationService } from 'src/app/user/services/registration.service'
 })
 export class AddUsersComponent implements OnInit {
   user: User = new User();
-
+  errorVal = '';
 
   constructor(public registrationService: RegistrationService, private router: Router,private activatedRoute: ActivatedRoute) { }
 
@@ -18,10 +18,11 @@ export class AddUsersComponent implements OnInit {
   }
 
   addUser() {
-    console.log(this.user);
     this.registrationService.regUser(this.user).subscribe(data => {
       this.user = data;
       this.router.navigate(['home', { outlets: { nav: ['users'] } }]);
+    },error=>{
+      this.errorVal = "Please fill all the fields";
     });
   }
 }

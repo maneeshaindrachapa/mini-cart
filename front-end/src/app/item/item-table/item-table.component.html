@@ -27,7 +27,7 @@
             <td class="scroll">{{item.description}}</td>
             <td>{{item.volume}}</td>
             <button (click)="itemService.goToUpdateItem(item.id)" class="btn btn-info" style="margin-right: 5px;"><i class="fa fa-edit" style="font-size: 0.65rem;"></i></button>
-            <button (click)="delete(item.id)" class="btn btn-danger"><i class="fa fa-trash" style="font-size: 0.65rem;"></i></button>
+            <button (click)="opendelete(content,item)" class="btn btn-danger"><i class="fa fa-trash" style="font-size: 0.65rem;"></i></button>
           </tr>
         </tbody>
         <tfoot>
@@ -45,3 +45,18 @@
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Do you want to remove this item ?</h5>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">Select "Delete" below if you want to delete <b>{{deleteitem.name_item}}</b> ?</div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.close('Save click')" type="button"
+      data-dismiss="modal">Cancel</button>
+    <button (click)="delete(deleteitem.id)" class="btn btn-primary">Delete</button>
+  </div>
+</ng-template>
