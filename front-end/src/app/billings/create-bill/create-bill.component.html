@@ -62,9 +62,9 @@
                                     (click)="removeRow(item)">-</a><span>{{billedItems[i].name_item}}</span></td>
                             <td><span>{{(billedItems[i].description).substring(0,50)}}</span></td>
                             <td><span data-prefix>Rs.</span><span>{{billedItems[i].price}}</span></td>
-                            <td><span><input class="form-control" type="number" min="1"
+                            <td><span><input class="form-control" type="number" min="1" max={{billedItems[i].unit}}
                                         [(ngModel)]="billedItems[i].volume" (ngModelChange)="totalChange()"
-                                        onkeydown="if(event.key==='.'){event.preventDefault();}" /></span></td>
+                                        onkeydown="{event.preventDefault();}" /></span></td>
                             <td><span
                                     data-prefix>Rs.</span><span>{{(billedItems[i].price)*(billedItems[i].volume)}}</span>
                             </td>

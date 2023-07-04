@@ -11,16 +11,8 @@
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 0.85rem;"><b>{{item.name_item.toUpperCase()}} |
                                 Rs.{{item.price}}</b></h5>
-                        <p class="card-text scroll" style="font-size: 0.85rem;">{{item.description}}
+                        <p class="card-text scroll" style="font-size: 0.85rem;">{{(item.description).substring(0,50)}}
                         </p>
-                        <button class="btn btn-black" style="display:block;margin: 0px auto;"
-                            *ngIf="role!='ADMIN' && !iCart.includes(item.id) " (click)='addToCart(item)'><i
-                                class='fa fa-shopping-cart' style="font-size: 0.85rem;color:white"></i> Add to
-                            Cart</button>
-                        <button class="btn btn-grey" style="display:block;margin: 0px auto;"
-                            *ngIf="role!='ADMIN' && iCart.includes(item.id) " (click)='addToCart(item)'><i
-                                class='fa fa-shopping-cart' style="font-size: 0.85rem;color:black"></i> Add to
-                            Cart</button>
                     </div>
                 </div>
             </div>

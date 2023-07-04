@@ -39,7 +39,8 @@ export class CreateBillComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemService.getAllItems().subscribe(data => {
-      this.items = data.rows;
+      let d = data.rows;
+      this.items = d.filter(d => d.unit>0);
     });
   }
 
@@ -56,14 +57,25 @@ export class CreateBillComponent implements OnInit {
   downloadJson(content: NgbModal) {
 
     const fileData = this.imgBase64;
-    const apiUrl = this.baseUrl + '/bills/download';
+    const apiUrl = this.baseUrl + '/bills';
 
-    this.http.post(apiUrl, { fileData: fileData, name: this.invoideNo.toString() + ".png" }).subscribe(
+    this.http.post(apiUrl + "/download", { fileData: fileData, name: this.invoideNo.toString() + ".png" }).subscribe(
       () => {
+        this.http.post(apiUrl + "/updateItems", { items: this.billedItems }).subscribe(() => {
+          this.ngOnInit();
+        }, error => {
+          console.log(error);
+        })
         this.modalRef = this.modalService.open(content, {
           centered: true,
           backdrop: "static",
         });
+        this.ngOnInit();
+        this.billedItems = [];
+        this.total = 0;
+        this.paidAmount = 0;
+        this.todayISOString = new Date().toISOString();
+        this.invoideNo = Date.now();
       },
       (error) => {
         console.error('Error downloading file', error);
