@@ -44,7 +44,7 @@ export class UserSigninComponent implements OnDestroy {
           if (response.role == 'ADMIN') {
             this.router.navigate(['home', { outlets: { nav: ['dashboard'] } }]);
           } else {
-            this.router.navigate(['home', { outlets: { nav: ['item-list'] } }]);
+            this.router.navigate(['home', { outlets: { nav: ['item-table'] } }]);
           }
         }
       }, (appError: AppError) => {

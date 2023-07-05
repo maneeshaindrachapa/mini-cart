@@ -9,10 +9,11 @@
                 <div class="card" style="width: 12rem;height:100%;">
                     <img src="{{item.image_url}}" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title" style="font-size: 0.85rem;"><b>{{item.name_item.toUpperCase()}} |
+                        <h5 class="card-title" style="font-size: 0.85rem;"><b>{{item.name_item.toUpperCase()}}<br>
                                 Rs.{{item.price}}</b></h5>
                         <p class="card-text scroll" style="font-size: 0.85rem;">{{(item.description).substring(0,50)}}
                         </p>
+                        <h5 class="card-title" style="font-size: 0.85rem;"><b>Units: {{item.unit}} </b></h5>
                     </div>
                 </div>
             </div>

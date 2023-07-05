@@ -26,6 +26,7 @@ export class ItemTableComponent implements OnInit {
   savedItems: SavedItem[];
   deleteitem: Item;
   modalRef: NgbModalRef;
+  role:string;
 
   constructor(public itemService: ItemService, private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
   }
@@ -46,6 +47,7 @@ export class ItemTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.role = sessionStorage.getItem('role');
     this.itemService.findSortedAndPaginatedItems(this.page, this.size, this.sortValue, this.direction).subscribe(data => {
       this.items = data.rows;
       this.filteredItems = this.items;
