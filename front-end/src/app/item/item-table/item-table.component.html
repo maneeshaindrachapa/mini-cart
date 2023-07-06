@@ -34,10 +34,6 @@
             <ngb-pagination [collectionSize]="items.totalElements" [(page)]="page" [pageSize]="items.size"
               (pageChange)="onPaginate()">
             </ngb-pagination>
-            <!-- <select class="custom-select" style="width: auto" [(ngModel)]="size" (click)="onPaginate()">
-              <option *ngFor="let item of [].constructor(items.totalElements); let i = index" [ngValue]="i+1">{{i+1}}
-                items on page</option>
-            </select> -->
           </div>
         </tfoot>
       </table>

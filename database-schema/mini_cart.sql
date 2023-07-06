@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2023 at 07:31 PM
+-- Generation Time: Jul 06, 2023 at 05:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -117,8 +117,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `name_item`, `unit`, `description`, `volume`, `active`, `account_id`, `price`, `image_url`) VALUES
-(8, 'Sahana Cake', '19', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua', 0, 0, 0, 1000, 'https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg'),
-(19, 'zzz Cake', '16', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua', 0, 0, 0, 25, 'https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg');
+(8, 'Sahana Cake', '22', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua', 0, 0, 0, 1000, 'https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg'),
+(19, 'zzz Cake', '12', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua', 0, 0, 0, 25, 'https://iheartcraftythings.com/wp-content/uploads/2021/07/6-38.jpg');
 
 -- --------------------------------------------------------
 
@@ -142,10 +142,20 @@ CREATE TABLE `saved_items` (
 CREATE TABLE `transactions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `worker_id` int(10) UNSIGNED NOT NULL,
+  `invoice_id` int(10) UNSIGNED NOT NULL,
   `item_id` int(10) UNSIGNED NOT NULL,
-  `quantity` int(10) UNSIGNED NOT NULL
+  `quantity` int(10) UNSIGNED NOT NULL,
+  `price` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `timestamp`, `invoice_id`, `item_id`, `quantity`, `price`) VALUES
+(1, '2023-06-01 10:02:01', 4294967295, 8, 2, 2000.00),
+(2, '2023-07-06 10:02:01', 4294967295, 19, 2, 50.00),
+(3, '2023-05-02 10:56:06', 4294967295, 8, 1, 1000.00);
 
 -- --------------------------------------------------------
 
@@ -300,7 +310,7 @@ ALTER TABLE `saved_items`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

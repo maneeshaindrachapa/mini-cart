@@ -18,8 +18,8 @@ export class DashboardViewComponent implements OnInit {
   month2BeforeToday_ = "";
   revenue = 0;
   revenue2 = 0;
-  transaction=0;
-  transaction2=0;
+  transaction = 0;
+  transaction2 = 0;
   totalRevenue = 0;
   revenueChart: any;
   month = new Date().getMonth();
@@ -27,11 +27,39 @@ export class DashboardViewComponent implements OnInit {
   totalUser = 0;
   monthlyUsers = 0;
 
+
+  searchTerm: string = '';
+
+  sortValues: string[] = ['invoice_id', 'name_item', 'quantity','timestamp', 'price'];
+  page = 0;
+  size = 15;
+  sortValue: string = this.sortValues[0];
+  direction = 'asc';
+  totalTransactions :any;
+  ft:any;
+  
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
   };
-  public rbarChartLabels = [ this.monthNames[this.month - 1],this.monthNames[this.month]];
+  public rbarChartColors: Array<any> = [
+    {
+      backgroundColor: 'rgba(28, 182, 235,0.8)',
+      borderColor: 'rgba(28, 182, 235,0.8)',
+      pointBackgroundColor: 'rgba(28, 182, 235,0.8)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(28, 182, 235,0.8)'
+    },
+    {
+      backgroundColor: 'rgba(10, 39, 122,0.2)',
+      borderColor: 'rgba(10, 39, 122,0.2)',
+      pointBackgroundColor: 'rgba(10, 39, 122,0.2)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(10, 39, 122,0.2)'
+    }];
+  public rbarChartLabels = [this.monthNames[this.month - 1], this.monthNames[this.month]];
   public rbarChartType = 'bar';
   public rbarChartLegend = true;
   public rbarChartData: any = [];
@@ -40,6 +68,7 @@ export class DashboardViewComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
+  
   public revenueChartLabels = ['Total Revenue', 'Monthly Revenue'];
   public revenueChartData = [];
   public revenueChartType = 'pie';
@@ -56,6 +85,7 @@ export class DashboardViewComponent implements OnInit {
     this.getUsersCurrentMonth();
     this.getTotalUsers();
     this.getRevenuePreviousMonth();
+    this.sort();
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +96,7 @@ export class DashboardViewComponent implements OnInit {
     this.dashboardService.getRevenueCurrentMonth(this.today_, this.monthBeforeToday_)
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          this.transaction+=1;
+          this.transaction += 1;
           this.revenue += data[i].price * data[i].quantity;
         }
       });
@@ -76,7 +106,7 @@ export class DashboardViewComponent implements OnInit {
     this.dashboardService.getRevenueCurrentMonth(this.monthBeforeToday_, this.month2BeforeToday_)
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          this.transaction2+=1;
+          this.transaction2 += 1;
           this.revenue2 += data[i].price * data[i].quantity;
         }
         this.generateRevenue2Chart();
@@ -87,7 +117,9 @@ export class DashboardViewComponent implements OnInit {
   getTotalRevenue() {
     this.dashboardService.getTotalRevenue()
       .subscribe(data => {
-        this.totalRevenue = data[0].total_price;
+        for (let i = 0; i < data.length; i++) {
+          this.totalRevenue += data[i].total_price;
+        }
         this.generateRevenueChart();
       });
   }
@@ -116,5 +148,38 @@ export class DashboardViewComponent implements OnInit {
       .subscribe(data => {
         this.totalUser = data[0].total_users;
       });
+  }
+
+  onSort(sort: { value: string, direction: string }) {
+    this.sortValue = sort.value;
+    this.direction = sort.direction;
+    this.sort();
+  }
+
+  onPaginate() { this.sort(); }
+
+  sort() {
+    this.dashboardService.getTotalTransactions(this.page, this.size, this.sortValue, this.direction).subscribe(data => {
+      this.totalTransactions = data.rows;
+      this.ft = this.totalTransactions;
+      console.log(this.ft);
+    });
+  }
+
+  onSearch() {
+    // Perform the filtering in real-time
+    this.ft = this.searchTerm
+      ? this.totalTransactions.filter(item_ => {
+        return (
+          item_.invoice_id.toString().includes(this.searchTerm) ||
+          ((item_.name_item.toLowerCase()).toString()).includes(this.searchTerm.toLowerCase())
+        );
+      })
+      : this.totalTransactions;
+  }
+
+  // Method to clear the search term
+  clearSearch() {
+    this.searchTerm = '';
   }
 }

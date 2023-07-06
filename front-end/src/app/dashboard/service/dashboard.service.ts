@@ -42,4 +42,7 @@ export class DashboardService {
   getTotalUsers() {
     return this.http.get<any>(this.baseUrl + '/dashboard/get-total-users');
   }
+  getTotalTransactions(page: number, size: number, sort: string, direction: string) {
+    return this.http.get<any>(this.baseUrl + '/dashboard/totalTransactions?page=' + page + '&size=' + size + '&sort=' + sort + '&direction=' + direction);
+  }
 }

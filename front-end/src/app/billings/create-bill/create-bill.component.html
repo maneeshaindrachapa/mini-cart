@@ -91,7 +91,7 @@
                 </table>
             </article>
         </div>
-        <button (click)="capture(content)" class="btn btn-info btn-icon-split" style="float: right;font-size: 12px;">
+        <button (click)="capture(content)" class="btn btn-info btn-icon-split" style="float: right;font-size: 12px;" [disabled]="remaining>0">
             <span class="text text-white-50">Downlod Invoice</span>
         </button>
     </div>

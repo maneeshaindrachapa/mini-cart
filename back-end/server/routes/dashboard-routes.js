@@ -7,4 +7,5 @@ router.post("/get-monthly-revenue",dashboardController.getTotalRevenueMonth);
 router.get("/get-total-revenue",dashboardController.getTotalRevenue);
 router.post("/get-monthly-users",dashboardController.getMonthlyUsers);
 router.get("/get-total-users",dashboardController.getTotalUsers);
+router.get("/totalTransactions",dashboardController.getTotalTransactions);
 module.exports = router;

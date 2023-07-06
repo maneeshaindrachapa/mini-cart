@@ -61,7 +61,7 @@ export class CreateBillComponent implements OnInit {
 
     this.http.post(apiUrl + "/download", { fileData: fileData, name: this.invoideNo.toString() + ".png" }).subscribe(
       () => {
-        this.http.post(apiUrl + "/updateItems", { items: this.billedItems }).subscribe(() => {
+        this.http.post(apiUrl + "/updateItems", { items: this.billedItems ,invoiceID:this.invoideNo}).subscribe(() => {
           this.ngOnInit();
         }, error => {
           console.log(error);
@@ -71,6 +71,7 @@ export class CreateBillComponent implements OnInit {
           backdrop: "static",
         });
         this.ngOnInit();
+        this.remaining=0.0;
         this.billedItems = [];
         this.total = 0;
         this.paidAmount = 0;
@@ -121,6 +122,7 @@ export class CreateBillComponent implements OnInit {
     for (let i = 0; i < this.billedItems.length; i++) {
       this.total += (this.billedItems[i].price) * (this.billedItems[i].volume);
     }
+    this.remaining = this.total - this.paidAmount;
   }
 
   remainingChange() {
